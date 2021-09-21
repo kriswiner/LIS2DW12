@@ -58,9 +58,9 @@ float stress[3];        // holds results of the self test
 uint8_t status = 0, wakeSource = 0, FIFOstatus = 0, numFIFOSamples = 0;
 
 // Logic flags to keep track of device states
-bool LIS2DW12_wake_flag = false;
-bool LIS2DW12_sleep_flag = false;
-bool InMotion = false;
+volatile bool LIS2DW12_wake_flag = false;
+volatile bool LIS2DW12_sleep_flag = false;
+volatile bool InMotion = false;
 
 LIS2DW12 LIS2DW12(&i2c_0); // instantiate LIS2DW12 class
 
@@ -123,7 +123,6 @@ void setup()
    delay(100);                                                     
 
    aRes = 0.000244f * (1 << fs);                                    // scale resolutions per LSB for the sensor at 14-bit data 
-   if(lpMode == 0) {aRes = 0.000976f * (1 << fs);}                  // special case of 12-bit data in low power mode 1
 
    Serial.println("hold flat and motionless for bias calibration");
    delay(5000);
