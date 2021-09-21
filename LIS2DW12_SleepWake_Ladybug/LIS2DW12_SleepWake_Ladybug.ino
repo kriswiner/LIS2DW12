@@ -46,7 +46,7 @@ ODR      odr    = LIS2DW12_ODR_25Hz;       // choices are 12.5, 25, 50, 100, 200
 FS       fs     = LIS2DW12_FS_2G;          // choices are 2, 4, 8, or 16 g
 BW_FILT  bw     = LIS2DW12_BW_FILT_ODR4;   // choices are ODR divided by 2, 4, 10, or 20
 bool lowNoise = false;                     // low noise or lowest power
-FIFOMODE fifoMode = CONT-TO-FIFO;          // capture 32 samples of data before wakeup event, about 2 secs at 25 Hz
+FIFOMODE fifoMode = CONT_TO_FIFO;          // capture 32 samples of data before wakeup event, about 2 secs at 25 Hz
 
 float aRes = 0;         // Sensor data scale in mg/LSB
 int16_t accelCount[3];  // Stores the 16-bit signed accelerometer sensor output
