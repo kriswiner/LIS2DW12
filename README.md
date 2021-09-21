@@ -14,3 +14,5 @@ Using this Sleep/Wake toggling the application can run at a high rate when in mo
 LIS2DW12 [data sheet](https://www.st.com/resource/en/datasheet/lis2dw12.pdf).
 
 LIS2DW12 [application note](https://www.st.com/resource/en/application_note/dm00401877-lis2dw12-alwayson-3d-accelerometer-stmicroelectronics.pdf).
+
+LIS2DW12 breakout board available in the OSH Park shared space [here](https://oshpark.com/shared_projects/GVUiTiyH).
