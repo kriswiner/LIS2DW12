@@ -122,7 +122,6 @@ void setup()
    delay(100);                                                     
 
    aRes = 0.000244f * (1 << fs);                                    // scale resolutions per LSB for the sensor at 14-bit data 
-   if(lpMode == 0) {aRes = 0.000976f * (1 << fs);}                  // special case of 12-bit data in low power mode 1
 
    Serial.println("hold flat and motionless for bias calibration");
    delay(5000);
