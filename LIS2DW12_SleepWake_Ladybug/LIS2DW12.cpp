@@ -43,7 +43,6 @@ void LIS2DW12::init(uint8_t fs, uint8_t odr, uint8_t mode, uint8_t lpMode, uint8
    if(lowNoise)   _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL6, bw << 6 | fs << 4 | 0x04);   // set low noise bit 2        
 
    _aRes = 0.000244f * (1 << fs);                                       // scale resolutions per LSB for the sensor at 14-bit data 
-   if(lpMode == 0) {_aRes = 0.000976f * (1 << fs);}                     // special case of 12-bit data in low power mode 1
 
    // enable block data update (bit 3) and auto register address increment (bit 2)
    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL2, 0x08 | 0x04);    
@@ -88,7 +87,6 @@ void LIS2DW12::deactivateNoMotionInterrupt()
   if(lowNoise) _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL6, bw << 6 | fs << 4 | 0x04);   // set low noise bit 2        
 
    _aRes = 0.000244f * (1 << fs);                                       // scale resolutions per LSB for the sensor at 14-bit data 
-   if(lpMode == 0) {_aRes = 0.000976f * (1 << fs);}                     // special case of 12-bit data in low power mode 1
 
      int16_t temp[3] = {0, 0, 0};
      int32_t sum[3] = {0, 0, 0};
