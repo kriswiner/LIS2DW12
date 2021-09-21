@@ -15,4 +15,6 @@ LIS2DW12 [data sheet](https://www.st.com/resource/en/datasheet/lis2dw12.pdf).
 
 LIS2DW12 [application note](https://www.st.com/resource/en/application_note/dm00401877-lis2dw12-alwayson-3d-accelerometer-stmicroelectronics.pdf).
 
+Sketches were developed using an STM32L432 Ladybug development board available on [Tindie](https://www.tindie.com/products/tleracorp/ladybug-stm32l432-development-board/).
+
 LIS2DW12 breakout board available in the OSH Park shared space [here](https://oshpark.com/shared_projects/GVUiTiyH).
