@@ -179,13 +179,6 @@ void loop()
   if (alarmFlag) { // update RTC output at the alarm
       alarmFlag = false;
       
-     LIS2DW12.readAccelData(accelCount); // get 12-bit signed accel data
-
-    // Now we'll calculate the accleration value into actual g's
-     ax = (float)accelCount[0]*aRes - offset[0];  // get actual g value, this depends on scale being set
-     ay = (float)accelCount[1]*aRes - offset[1];   
-     az = (float)accelCount[2]*aRes - offset[2]; 
-     
     Serial.println(" ");
     Serial.print("ax = ");  Serial.print((int)1000*ax);  
     Serial.print(" ay = "); Serial.print((int)1000*ay); 
