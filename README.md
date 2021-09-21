@@ -1,7 +1,7 @@
 # LIS2DW12
 Arduino sketches demonstrating operation of ST's LIS2DW12 low-power accelerometer
 
-![image]()
+![image](https://user-images.githubusercontent.com/6698410/134245151-12ffb94b-2f41-4cb0-af91-9ddacd7b5a6e.jpg)
 
 **The DataReady sketch** shows how to configure the accelerometer power modes, full scale range, ODR and bandwidth. The sketch performs the self test, calculates the offset biases, and initializes the sensor for data measurement. The sketch sets up the data ready interrupt and reads the accelerometer data when the interrupt is triggered. Finally, the sketch outputs the data to the serial monitor when the RTC alarm is triggered (every second). The main loop is entirely interrupt based such that when no interrupt is being handled the STM32L42 MCU waits in a low-power (STOP) state. Power measurements TBD.
 
