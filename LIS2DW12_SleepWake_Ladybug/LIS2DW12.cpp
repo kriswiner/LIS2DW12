@@ -80,25 +80,32 @@ void LIS2DW12::deactivateNoMotionInterrupt()
 
   void LIS2DW12::Compensation(uint8_t fs, uint8_t odr, uint8_t mode, uint8_t lpMode, uint8_t bw, bool lowNoise, float * offset)
   {     
-   // sample rate (bits 4 - 7), power mode (bits 2-3), and low-power mode (bits 0-1)
-   _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL1, odr << 4 | mode << 2 | lpMode ); 
-   // bandwidth bits (6-7), full-scale range bit (4-5)
-   _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL6, bw << 6 | fs << 4 );         
-  if(lowNoise) _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL6, bw << 6 | fs << 4 | 0x04);   // set low noise bit 2        
+    int16_t temp[3] = {0, 0, 0};
+    int32_t sum[3] = {0, 0, 0};
 
-   _aRes = 0.000244f * (1 << fs);                                       // scale resolutions per LSB for the sensor at 14-bit data 
+    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL2, 0x08 | 0x04); // Block update and auto increment registers 
+    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL3, 0x00);    
+    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL4_INT1_PAD_CTRL, 0x00); 
+    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL5_INT2_PAD_CTRL, 0x00); 
+    // bandwidth bits (6-7), full-scale range bit (4-5)
+    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL6, bw << 6 | fs << 4 );         
+    if(lowNoise) _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL6, bw << 6 | fs << 4 | 0x04);   // set low noise bit 2        
+    // sample rate (bits 4 - 7), power mode (bits 2-3), and low-power mode (bits 0-1)
+    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL1, odr << 4 | mode << 2 | lpMode ); 
 
-     int16_t temp[3] = {0, 0, 0};
-     int32_t sum[3] = {0, 0, 0};
+    _aRes = 0.000244f * (1 << fs);                                       // scale resolutions per LSB for the sensor  
+    delay(100);
+    while( !( getStatus() & 0x01) ) { } // wait for data ready bit
+    readAccelData(temp);                // read and discard data
 
-     for(uint8_t ii = 0; ii < 128; ii++)
-     {
+    for(uint8_t ii = 0; ii < 128; ii++)
+    {
+       while( !(getStatus() & 0x01) ) { } // wait for data ready bit
        readAccelData(temp);
-       sum[0] += temp[0];
-       sum[1] += temp[1];
-       sum[2] += temp[2];
-       delay(100);
-     }
+       sum[0] += (int32_t)temp[0];
+       sum[1] += (int32_t)temp[1];
+       sum[2] += (int32_t)temp[2];
+    }
      
      offset[0] = float(sum[0])/128.0f;
      offset[1] = float(sum[1])/128.0f;
@@ -124,7 +131,6 @@ void LIS2DW12::deactivateNoMotionInterrupt()
    // 5x sum of 13-bit (except sign) could be as much as 15.25 bits and too big for int16_t, but in 
    // practice nominal value s are < 1000 on 4 g scale and selfTest values are < 3000 so int16_t OK
    int16_t posX=0, posY=0, posZ=0, nomX=0, nomY=0, nomZ=0; // 5x sum of 13-bit (except sign) could be
-   int8_t status = 0;
    
    // initialize sensor for self test
    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_CTRL2, 0x08 | 0x04);    
