@@ -58,7 +58,7 @@ void LIS2DW12::init(uint8_t fs, uint8_t odr, uint8_t mode, uint8_t lpMode, uint8
    // enable sleep detect (bit 6), set wake threshold 1 LSB = 1/64 of full scale
    _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_WAKE_UP_THS, 0x40 | 0x02); //  62.5 mg threshold for wake on any axis, n x 31.25 mgs at 2 g FS
   // wake-up from sleep duration (bits 5-6) * n/odr, at 25 Hz max is 4/25 = 0.16 s
-  // inactivity delat before sleep (bits 0 - 3) 512*n/odr, at 25 Hz, 0 is 0.64 s, 1 is 20.5 s, max is 327 sec
+  // inactivity delay before sleep (bits 0 - 3) 512*n/odr, at 25 Hz, 0 is 0.64 s, 1 is 20.5 s, max is 327 sec
   _i2c_bus->writeByte(LIS2DW12_ADDRESS, LIS2DW12_WAKE_UP_DUR, 0x40 | 0x01);  // set inactivity delay before sleep to 20.5 s at 25 Hz odr
 
    // pulse interrupt (bit 7), enable interrupt (bit 5) 
