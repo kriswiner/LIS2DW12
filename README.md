@@ -1,5 +1,5 @@
 # LIS2DW12
-Arduino sketches demonstrating operation of ST's LIS2DW12 low-power accelerometer
+Arduino sketches demonstrating operation of ST's LIS2DW12 low-power accelerometer. More discussion [here](https://github.com/kriswiner/LIS2DW12/wiki).
 
 ![image](https://user-images.githubusercontent.com/6698410/134245151-12ffb94b-2f41-4cb0-af91-9ddacd7b5a6e.jpg)
 
