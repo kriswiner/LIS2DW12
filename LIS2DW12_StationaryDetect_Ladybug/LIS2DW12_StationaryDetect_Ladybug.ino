@@ -150,7 +150,7 @@ void setup()
   attachInterrupt(LIS2DW12_intPin1, myinthandler1, RISING);  // attach data ready/wake-up interrupt for INT1 pin output of LIS2DW12
   attachInterrupt(LIS2DW12_intPin2, myinthandler2, RISING);  // attach no-motion          interrupt for INT2 pin output of LIS2DW12 
 
-  LIS2DW12.getStatus(); // read status of interrupts to clear
+  LIS2DW12.getWakeSource(); // read wake source register to clear wakeup interrupt
     
 }/* end of setup */
 
