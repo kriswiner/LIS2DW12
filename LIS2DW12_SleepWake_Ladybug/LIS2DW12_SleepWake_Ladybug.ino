@@ -150,7 +150,7 @@ void setup()
   attachInterrupt(LIS2DW12_intPin1, myinthandler1, RISING);  // attach data ready/wake-up interrupt for INT1 pin output of LIS2DW12
   attachInterrupt(LIS2DW12_intPin2, myinthandler2, RISING);  // attach no-motion          interrupt for INT2 pin output of LIS2DW12 
 
-  LIS2DW12.getStatus(); // read status of interrupts to clear
+  LIS2DW12.getWakeSource(); // read wake source register to clear wakeup interrupt
     
 }/* end of setup */
 
@@ -160,7 +160,7 @@ void loop()
   if(LIS2DW12_wake_flag)
   {
    LIS2DW12_wake_flag = false;    // clear the wake flag if wake event
-   status = LIS2DW12.getStatus(); // read status of interrupts to clear
+   status = LIS2DW12.getWakeSource(); // read wake source register to clear wakeup interrupt
 
    if(status & 0x40) {       // is this a wakeup event?
    InMotion = true;          // set motion state latch
