@@ -160,7 +160,8 @@ void loop()
   if(LIS2DW12_wake_flag)
   {
    LIS2DW12_wake_flag = false;    // clear the wake flag if wake event
-
+   LIS2DW12.getWakeSource();      // read wake source register to clear wakeup interrupt
+   
    InMotion = true;          // set motion state latch
    Serial.println("** LIS2DW12 is awake! **");
 
